@@ -2,7 +2,7 @@ version: '3'
 
 services:
   front:
-    build: .
+    build: ./frontend
     ports:
       - "5000:5000"
     environment:
@@ -10,7 +10,7 @@ services:
     command: ["flask", "run", "--host=0.0.0.0"]
 
   back:
-    build: ./back
+    build: ./backend
     ports:
       - "5001:5000"
     environment:
