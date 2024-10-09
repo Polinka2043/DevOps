@@ -6,6 +6,8 @@ services:
     environment:
       - FLASK_APP=add
     command: ["flask", "run", "--host=0.0.0.0"]
+    networks:
+      - mynet
 
   back:
     build: ../backend
@@ -14,3 +16,9 @@ services:
     environment:
       - FLASK_APP=back
     command: ["flask", "run", "--host=0.0.0.0"]
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
