@@ -6,7 +6,7 @@ services:
       - "5002:5002"  # Фронтенд должен использовать порт 5002
     environment:
       - FLASK_APP=add
-    command: ["flask", "run", "--host=0.0.0.0", "--port=5002"] 
+    command: ["python3","add.py"] 
     depends_on:
       - backend  
 
@@ -16,6 +16,6 @@ services:
       - "5001:5001"
     environment:
       - FLASK_APP=back
-    command: ["flask", "run", "--host=127.0.0.1", "--port=5001"]
+    command: ["python3","back.py"]
 
 
