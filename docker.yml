@@ -1,21 +1,30 @@
-version: '3'
+version: '3.8'
+
 services:
   frontend:
-    build: ../fronted 
+    build: ../fronted
+    dockerfile: Dockerfile
     ports:
-      - "5002:5002"  # Фронтенд должен использовать порт 5002
+      - "5002:5002"
     environment:
       - FLASK_APP=add
-    command: ["python3","add.py"] 
-    depends_on:
-      - backend  
+    command: ["python", "add.py"]
 
   backend:
     build: ../backend
+    dockerfile: Dockerfile
     ports:
       - "5001:5001"
     environment:
       - FLASK_APP=back
-    command: ["python3","back.py"]
+    command: ["python", "back.py"]
 
-
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"  # Expose Nginx on port 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mount Nginx configuration
+    depends_on:
+      - fronted
+      - backend
