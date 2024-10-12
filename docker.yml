@@ -1,18 +1,18 @@
 version: '3'
 services:
-  front:
-    build: ../fronted
+  frontend:
+    build: ../fronted 
     ports:
-      - "5002:5001"
+      - "5002:5002"  # Фронтенд должен использовать порт 5002
     environment:
       - FLASK_APP=add
-    command: ["flask", "run", "--host=0.0.0.0", "--port=5001"]
+    command: ["flask", "run", "--host=0.0.0.0", "--port=5002"] 
     networks:
       - mynet
     depends_on:
-      - back
+      - backend  
 
-  back:
+  backend:
     build: ../backend
     ports:
       - "5001:5001"
