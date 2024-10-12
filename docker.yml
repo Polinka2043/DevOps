@@ -1,12 +1,12 @@
 services:
   frontend:
-    build: ./fronted
+    build: ../fronted
     ports:
       - "5002:5002"
     depends_on:
       - backend
   backend:
-    build: ./backend
+    build: ../backend
     ports:
       - "5001:5001"
   nginx:
