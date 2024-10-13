@@ -1,6 +1,3 @@
-events {
-    worker_connections 1024;
-}
 services:
   nginx:
     image: nginx:latest
