@@ -10,14 +10,14 @@ services:
       - my-network
 
   front:
-    build: ./fronted
+    build: ../fronted
     ports:
       - "5002:5002"
     networks:
       - my-network
 
   back:
-    build: ./backend
+    build: ../backend
     ports:
       - "5001:5001"
     networks:
