@@ -6,5 +6,5 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-  front:
+  devops-front-1:
     build: ../fronted
