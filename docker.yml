@@ -11,15 +11,6 @@ services:
 
   front:
     build: ../fronted
-    ports:
-      - "5002:5002"
-    networks:
-      - my-network
-
-  back:
-    build: ../backend
-    ports:
-      - "5001:5001"
     networks:
       - my-network
 
