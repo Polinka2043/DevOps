@@ -25,4 +25,4 @@ services:
 
 networks:
   my-network:
-    driver: true
+    driver: "bridge"
