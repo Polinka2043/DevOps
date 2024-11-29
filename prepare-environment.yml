@@ -1,1 +1,31 @@
+---
+- name: Prepare environment
+  hosts: all
+  become: yes  # Использовать sudo для выполнения задач
 
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: latest  # Установить последнюю версию Docker
+
+    - name: Install Docker Compose
+      get_url:
+        url: https://github.com/docker/compose/releases/latest/download/docker-compose-{{ ansible_os_family | lower }}-{{ ansible_architecture }}
+        dest: /usr/local/bin/docker-compose  # Путь, куда будет загружен Docker Compose
+        mode: 'u+x'  # Установить права на выполнение
+
+    - name: Clone frontend repository
+      git:
+        repo: 'https://github.com/Polinka2043/Laba-fronted.git'
+        dest: /home/projects # Путь, куда будет клонирован репозиторий
+
+    - name: Clone backend repository
+      git:
+        repo: 'https://github.com/Polinka2043/Laba-backend.git'
+        dest: /home/projects  # Путь, куда будет клонирован репозиторий
+
+    - name: Clone DevOps repository
+      git:
+        repo: 'https://github.com/Polinka2043/DevOps.git'
+        dest: /home/projects  # Путь, куда будет клонирован репозиторий
