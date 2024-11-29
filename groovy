@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     // Пример выполнения Ansible playbook для запуска приложений
-                    ansiblePlaybook playbook: 'path/to/your/start_app.yml'
+                    ansiblePlaybook playbook: 'start_applications.yml'
                 }
             }
         }
