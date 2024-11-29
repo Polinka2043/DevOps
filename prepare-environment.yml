@@ -18,14 +18,14 @@
     - name: Clone frontend repository
       git:
         repo: 'https://github.com/Polinka2043/Laba-fronted.git'
-        dest: /home/projects # Путь, куда будет клонирован репозиторий
+        dest: /home/projects/frontend # Путь, куда будет клонирован репозиторий
 
     - name: Clone backend repository
       git:
         repo: 'https://github.com/Polinka2043/Laba-backend.git'
-        dest: /home/projects  # Путь, куда будет клонирован репозиторий
+        dest: /home/projects/backend  # Путь, куда будет клонирован репозиторий
 
     - name: Clone DevOps repository
       git:
         repo: 'https://github.com/Polinka2043/DevOps.git'
-        dest: /home/projects  # Путь, куда будет клонирован репозиторий
+        dest: /home/projects/devops  # Путь, куда будет клонирован репозиторий
