@@ -6,4 +6,4 @@
     - name: Start services with Docker Compose
       command: docker-compose up -d
       args:
-        chdir: /home/projects/DevOps
+        chdir: /home/projects/devops
