@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Пример выполнения Ansible playbook для настройки окружения
-                    ansiblePlaybook playbook: 'path/to/your/playbook.yml'
+                    ansiblePlaybook playbook: 'prepare-environment.yml'
                 }
             }
         }
