@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Пример выполнения Ansible playbook для настройки окружения
-                    ansiblePlaybook playbook: 'prepare-environment.yml'
+                    ansiblePlaybook playbook: 'DevOps/prepare-environment.yml'
                 }
             }
         }
@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     // Пример выполнения Ansible playbook для запуска приложений
-                    ansiblePlaybook playbook: 'start_application.yml'
+                    ansiblePlaybook playbook: 'DevOps/start_application.yml'
                 }
             }
         }
