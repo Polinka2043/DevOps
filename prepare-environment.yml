@@ -1,31 +1,73 @@
----
 - name: Prepare environment
   hosts: all
-  become: yes  # Использовать sudo для выполнения задач
+  become: yes
 
   tasks:
-    - name: Install Docker
+    - name: Проверка установки Docker
+      command: docker --version
+      register: docker_installed
+      ignore_errors: yes
+
+    - name: Вывод версии Docker
+      debug:
+        var: docker_installed.stdout
+      when: docker_installed.rc == 0
+
+    - name: Установка Docker, если он не установлен
       apt:
-        name: docker-ce
-        state: latest  # Установить последнюю версию Docker
+        name: docker.io
+        state: latest
+        update_cache: yes
+      when: docker_installed.rc != 0
 
-    - name: Install Docker Compose
+    - name: Проверка установки Docker Compose
+      command: docker-compose --version
+      register: compose_installed
+      ignore_errors: yes
+
+    - name: Вывод версии Docker Compose
+      debug:
+        var: compose_installed.stdout
+      when: compose_installed.rc == 0
+
+    - name: Получение последней версии Docker Compose
+      command: "curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d '\"' -f 4"
+      register: compose_version
+      when: compose_installed.rc != 0
+
+    - name: Установка Docker Compose
       get_url:
-        url: https://github.com/docker/compose/releases/latest/download/docker-compose-{{ ansible_os_family | lower }}-{{ ansible_architecture }}
-        dest: /usr/local/bin/docker-compose  # Путь, куда будет загружен Docker Compose
-        mode: 'u+x'  # Установить права на выполнение
+        url: "https://github.com/docker/compose/releases/download/{{ compose_version.stdout }}/docker-compose-{{ ansible_system | lower }}-{{ ansible_architecture }}"
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x'
+      when: compose_installed.rc != 0
 
-    - name: Clone frontend repository
+    - name: Удаление директории фронтенд репозитория, если она существует
+      file:
+        path: "{{ lookup('env', 'WORKSPACE') }}/frontend"
+        state: absent
+
+    - name: Клонирование фронтенд репозитория
       git:
         repo: 'https://github.com/Polinka2043/Laba-fronted.git'
-        dest: /home/projects/frontend # Путь, куда будет клонирован репозиторий
+        dest: "{{ lookup('env', 'WORKSPACE') }}/frontend"
 
-    - name: Clone backend repository
+    - name: Удаление директории бэкенд репозитория, если она существует
+      file:
+        path: "{{ lookup('env', 'WORKSPACE') }}/backend"
+        state: absent
+
+    - name: Клонирование бэкенд репозитория
       git:
         repo: 'https://github.com/Polinka2043/Laba-backend.git'
-        dest: /home/projects/backend  # Путь, куда будет клонирован репозиторий
+        dest: "{{ lookup('env', 'WORKSPACE') }}/backend"
 
-    - name: Clone DevOps repository
+    - name: Удаление директории DevOps, если она существует
+      file:
+        path: "{{ lookup('env', 'WORKSPACE') }}/DevOps"
+        state: absent
+
+    - name: Клонирование репозитория DevOps
       git:
         repo: 'https://github.com/Polinka2043/DevOps.git'
-        dest: /home/projects/devops  # Путь, куда будет клонирован репозиторий
+        dest: "{{ lookup('env', 'WORKSPACE') }}/DevOps"
